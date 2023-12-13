@@ -50,6 +50,7 @@ static const char *recommended_su_bindings[] = {
 
 static int handle_option_r(Tracee *tracee, const Cli *cli, const char *value);
 static int handle_option_b(Tracee *tracee, const Cli *cli, const char *value);
+static int handle_option_debug(Tracee *tracee, const Cli *cli, const char *value);
 static int handle_option_q(Tracee *tracee, const Cli *cli, const char *value);
 static int handle_option_mixed_mode(Tracee *tracee, const Cli *cli, const char *value);
 static int handle_option_w(Tracee *tracee, const Cli *cli, const char *value);
@@ -74,7 +75,7 @@ static int post_initialize_exe(Tracee *, const Cli *, size_t, char *const *, siz
 
 static Cli proot_cli = {
 	.version  = VERSION,
-	.name     = "proot",
+	.name     = "linux",
 	.subtitle = "chroot, mount --bind, and binfmt_misc without privilege/setup",
 	.synopsis = "proot [option] ... [command]",
 	.colophon = "Visit https://proot-me.github.io for help, bug reports, suggestions, patches, ...\n\
@@ -104,6 +105,15 @@ Copyright (C) 2023 PRoot Developers, licensed under GPL v2 or later.",
 \t\n\
 \tIt is recommended to use the -R or -S options instead.",
 	},
+    { .class = "Regular options",
+        .arguments = {
+                { .name = "-d", .separator = ' ', .value = "value" },
+                { .name = "--debug", .separator = '=', .value = "value" },
+                { .name = NULL, .separator = '\0', .value = NULL } },
+        .handler = handle_option_debug,
+        .description = "enable/disable debug.",
+        .detail = "debug",
+    },
 	{ .class = "Regular options",
 	  .arguments = {
 		{ .name = "-b", .separator = ' ', .value = "path" },

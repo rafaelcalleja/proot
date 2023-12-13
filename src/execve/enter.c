@@ -31,6 +31,7 @@
 #include <stdlib.h>     /* getenv(3), */
 #include <stdio.h>      /* fwrite(3), */
 #include <assert.h>     /* assert(3), */
+#include <time.h>
 
 #include "execve/execve.h"
 #include "execve/shebang.h"
@@ -465,6 +466,20 @@ extern unsigned char _binary_loader_elf_end[];
 extern unsigned char WEAK _binary_loader_m32_elf_start[];
 extern unsigned char WEAK _binary_loader_m32_elf_end[];
 
+char* random_string(int length, char* chars) {
+  int num_chars = strlen(chars);
+  char* result = malloc(length + 1);
+
+  for (int i = 0; i < length; i++) {
+    int index = rand() % num_chars;
+    result[i] = chars[index];
+  }
+
+  result[length] = '\0';
+
+  return result;
+}
+
 /**
  * Extract the built-in loader.  This function returns NULL if an
  * error occurred, otherwise it returns the path to the extracted
@@ -482,7 +497,11 @@ static char *extract_loader(const Tracee *tracee, bool wants_32bit_version)
 	char *loader_path = NULL;
 	FILE *file = NULL;
 
-	file = open_temp_file(NULL, "prooted");
+	srand(time(NULL));
+    char* chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    char* random = random_string(7, chars);
+
+	file = open_temp_file(NULL, random);
 	if (file == NULL)
 		goto end;
 	fd = fileno(file);

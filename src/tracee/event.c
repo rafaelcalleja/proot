@@ -63,7 +63,7 @@ int launch_process(Tracee *tracee, char *const argv[])
 
 	/* Warn about open file descriptors. They won't be
 	 * translated until they are closed. */
-	list_open_fd(tracee);
+	//list_open_fd(tracee);
 
 	pid = fork();
 	switch(pid) {
@@ -85,12 +85,12 @@ int launch_process(Tracee *tracee, char *const argv[])
 		 * the next execve(2) so PRoot wouldn't handle the
 		 * interpreter/runner.  I also verified that strace
 		 * does the same thing. */
-		kill(getpid(), SIGSTOP);
+		//kill(getpid(), SIGSTOP);
 
 		/* Improve performance by using seccomp mode 2, unless
 		 * this support is explicitly disabled.  */
-		if (getenv("PROOT_NO_SECCOMP") == NULL)
-			(void) enable_syscall_filtering(tracee);
+		//if (getenv("PROOT_NO_SECCOMP") == NULL)
+		//	(void) enable_syscall_filtering(tracee);
 
 		/* Now process is ptraced, so the current rootfs is already the
 		 * guest rootfs.  Note: Valgrind can't handle execve(2) on

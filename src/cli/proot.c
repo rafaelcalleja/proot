@@ -48,6 +48,22 @@ static int handle_option_r(Tracee *tracee, const Cli *cli UNUSED, const char *va
 	return 0;
 }
 
+static int handle_option_debug(Tracee *tracee, const Cli *cli UNUSED, const char *value)
+{
+    Binding *binding;
+
+    if (strcmp(value, "true") == 0) {
+        binding = new_binding(tracee, "/", NULL, true);
+
+        if (binding == NULL)
+            return -1;
+    }
+
+    return 0;
+}
+
+
+
 static int handle_option_b(Tracee *tracee, const Cli *cli UNUSED, const char *value)
 {
 	char *host;

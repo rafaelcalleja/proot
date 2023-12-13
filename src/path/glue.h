@@ -1,4 +1,4 @@
-/* -*- c-set-style: "K&R"; c-basic-offset: 8 -*-
+/* -*- c-set-style: "K&R"; c-basic-offset: 8 -*-binding
  *
  * This file is part of PRoot.
  *
